@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgChartsModule } from 'ng2-charts';
 import { DashboardComponent } from './dashboard';
-import { BaseChartDirective } from 'ng2-charts';
 
 @NgModule({
-  declarations: [DashboardComponent],
-  imports: [CommonModule, BaseChartDirective],
+  imports: [
+    CommonModule,
+    NgChartsModule, // ✅ import the module, not BaseChartDirective
+    DashboardComponent,
+  ],
   exports: [DashboardComponent],
 })
 export class DashboardModule {}

@@ -1,0 +1,41 @@
+<div class="dashboard-container">
+  <h2>📊 Admin Dashboard - Role: {{ role }}</h2>
+
+  <!-- Add new metric -->
+  <div *ngIf="role !== 'viewer'" class="add-metric-form">
+    <input [(ngModel)]="newMetric.name" placeholder="Metric Name" />
+    <input [(ngModel)]="newMetric.value" type="number" placeholder="Value" />
+    <button (click)="addMetric()">➕ Add Metric</button>
+  </div>
+
+  <!-- Charts -->
+  <div class="charts">
+    <canvas baseChart [data]="chartData" chartType="bar"></canvas>
+    <canvas baseChart [data]="lineChartData" chartType="line"></canvas>
+    <canvas baseChart [data]="pieChartData" chartType="pie"></canvas>
+  </div>
+
+  <!-- Metric cards -->
+  <div *ngFor="let metric of metrics" class="metric-card">
+    <h3>{{ metric.name }}</h3>
+    <p>Value: {{ metric.value }}</p>
+
+    <button *ngIf="role !== 'viewer'" (click)="askAI(metric)">🤖 Ask AI</button>
+    <button *ngIf="role !== 'viewer'" (click)="deleteMetric(metric._id)">🗑 Delete</button>
+  </div>
+
+  <!-- AI Explanation -->
+  <div *ngIf="explanation">
+    <h4>AI Explanation for {{ selectedMetric?.name }}</h4>
+    <p>{{ explanation }}</p>
+  </div>
+
+  <!-- AI Prediction -->
+  <div>
+    <button (click)="predictAI()">🔮 Predict Next Month</button>
+    <p *ngIf="prediction">{{ prediction }}</p>
+  </div>
+
+  <!-- Export -->
+  <button (click)="exportCSV()">📂 Export CSV</button>
+</div>

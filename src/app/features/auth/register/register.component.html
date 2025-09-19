@@ -1,0 +1,17 @@
+<div class="auth-container">
+  <h2>Register</h2>
+  <form (ngSubmit)="onRegister()">
+    <input type="text" placeholder="Name" [(ngModel)]="name" name="name" required />
+    <input type="email" placeholder="Email" [(ngModel)]="email" name="email" required />
+    <input type="password" placeholder="Password" [(ngModel)]="password" name="password" required />
+    <select [(ngModel)]="role" name="role">
+      <option value="viewer">Viewer</option>
+      <option value="manager">Manager</option>
+      <option value="admin">Admin</option>
+    </select>
+    <button type="submit">Register</button>
+  </form>
+  <p *ngIf="error" class="error">{{ error }}</p>
+  <p *ngIf="success" class="success">{{ success }}</p>
+  <p>Already have an account? <a routerLink="/login">Login</a></p>
+</div>

@@ -1,0 +1,20 @@
+<div class="users-container">
+  <h2>👥 User Management</h2>
+
+  <div class="add-user">
+    <input [(ngModel)]="newUser.name" placeholder="User name" />
+    <select [(ngModel)]="newUser.role">
+      <option value="viewer">Viewer</option>
+      <option value="manager">Manager</option>
+      <option value="admin">Admin</option>
+    </select>
+    <button (click)="addUser()">➕ Add User</button>
+  </div>
+
+  <ul>
+    <li *ngFor="let user of users">
+      {{ user.name }} - <b>{{ user.role }}</b>
+      <button (click)="deleteUser(user.id)">❌ Remove</button>
+    </li>
+  </ul>
+</div>
