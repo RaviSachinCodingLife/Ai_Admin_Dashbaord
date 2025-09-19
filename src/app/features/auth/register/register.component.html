@@ -1,17 +1,59 @@
-<div class="auth-container">
-  <h2>Register</h2>
-  <form (ngSubmit)="onRegister()">
-    <input type="text" placeholder="Name" [(ngModel)]="name" name="name" required />
-    <input type="email" placeholder="Email" [(ngModel)]="email" name="email" required />
-    <input type="password" placeholder="Password" [(ngModel)]="password" name="password" required />
-    <select [(ngModel)]="role" name="role">
-      <option value="viewer">Viewer</option>
-      <option value="manager">Manager</option>
-      <option value="admin">Admin</option>
-    </select>
-    <button type="submit">Register</button>
-  </form>
-  <p *ngIf="error" class="error">{{ error }}</p>
-  <p *ngIf="success" class="success">{{ success }}</p>
-  <p>Already have an account? <a routerLink="/login">Login</a></p>
+<div class="register-page">
+  <div class="register-card">
+    <h2 class="text-center">Create Account</h2>
+    <p class="subtitle text-center">Join AI Admin Dashboard</p>
+
+    <form (ngSubmit)="onRegister()">
+      <div class="form-group">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Full Name"
+          [(ngModel)]="name"
+          name="name"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <input
+          type="email"
+          class="form-control"
+          placeholder="Email Address"
+          [(ngModel)]="email"
+          name="email"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <input
+          type="password"
+          class="form-control"
+          placeholder="Password"
+          [(ngModel)]="password"
+          name="password"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <select class="form-control" [(ngModel)]="role" name="role">
+          <option value="viewer">Viewer</option>
+          <option value="manager">Manager</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn-register">Register</button>
+    </form>
+
+    <p *ngIf="error" class="error-msg">{{ error }}</p>
+    <p *ngIf="success" class="success-msg">{{ success }}</p>
+
+    <p class="login-text">
+      Already have an account?
+      <a routerLink="/login">Login</a>
+    </p>
+  </div>
 </div>

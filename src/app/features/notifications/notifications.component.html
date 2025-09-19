@@ -1,6 +1,29 @@
-<div class="notifications-container">
-  <h2>🔔 Notifications</h2>
-  <ul>
-    <li *ngFor="let note of notifications">{{ note }}</li>
-  </ul>
+<div class="notifications-panel">
+  <h3>🔔 Notifications</h3>
+
+  <!-- Send new notification (admin/manager only) -->
+  <div *ngIf="isAdminOrManager()" class="send-notification">
+    <input [(ngModel)]="newMessage" placeholder="Type notification..." />
+    <select [(ngModel)]="newType">
+      <option value="info">Info</option>
+      <option value="success">Success</option>
+      <option value="warning">Warning</option>
+      <option value="error">Error</option>
+    </select>
+    <button (click)="sendNotification()">Send</button>
+  </div>
+
+  <!-- Notifications list -->
+  <div *ngIf="notifications.length; else empty">
+    <ul>
+      <li *ngFor="let n of notifications" [ngClass]="n.type">
+        <span class="time">{{ n.createdAt | date : 'short' }}</span>
+        <p>{{ n.message }}</p>
+      </li>
+    </ul>
+  </div>
+
+  <ng-template #empty>
+    <div class="empty">No notifications yet.</div>
+  </ng-template>
 </div>

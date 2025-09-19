@@ -1,4 +1,3 @@
-// routes/metrics.js
 import express from 'express';
 import { protect } from '../middleware/authMiddleware.js';
 import Metric from '../models/Metric.js';
@@ -9,7 +8,6 @@ const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 export default (io) => {
   const router = express.Router();
 
-  // Get metrics
   router.get('/', protect(), async (req, res) => {
     const metrics = await Metric.find();
     res.json(metrics);
@@ -21,7 +19,7 @@ export default (io) => {
       const metric = new Metric(req.body);
       await metric.save();
 
-      // ✅ Emit update to all connected clients
+      // ✅ Emit new metric event
       io.emit('metric:new', metric);
 
       res.json(metric);
@@ -30,20 +28,21 @@ export default (io) => {
     }
   });
 
-  // AI explanation
+  // Delete metric
+  router.delete('/:id', protect(['admin', 'manager']), async (req, res) => {
+    await Metric.findByIdAndDelete(req.params.id);
+    io.emit('metric:delete', req.params.id);
+    res.json({ success: true });
+  });
+
+  // AI explain
   router.post('/explain', protect(), async (req, res) => {
     try {
       const { metricName, value } = req.body;
       const response = await client.chat.completions.create({
         model: 'gpt-4o-mini',
-        messages: [
-          {
-            role: 'user',
-            content: `Explain what ${metricName} with value ${value} means in a business context.`,
-          },
-        ],
+        messages: [{ role: 'user', content: `Explain ${metricName} with value ${value}` }],
       });
-
       res.json({ explanation: response.choices[0].message.content });
     } catch (err) {
       res.status(500).json({ error: err.message });

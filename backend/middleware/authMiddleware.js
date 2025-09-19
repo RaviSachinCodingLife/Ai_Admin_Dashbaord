@@ -10,6 +10,7 @@ export const protect = (roles = []) => {
       req.user = decoded;
 
       if (roles.length && !roles.includes(decoded.role)) {
+        console.log('Forbidden:', decoded.role); 
         return res.status(403).json({ error: 'Forbidden' });
       }
 

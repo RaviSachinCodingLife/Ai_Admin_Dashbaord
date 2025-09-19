@@ -1,4 +1,5 @@
-.register-page {
+/* Full white background */
+.login-page {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -8,18 +9,19 @@
 }
 
 /* Gradient card */
-.register-card {
+.login-card {
   width: 100%;
-  max-width: 400px;
+  max-width: 380px;
   background: linear-gradient(135deg, #a8f0ec, #edbaca);
   border-radius: 16px;
   padding: 2rem;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  color: #333;
   text-align: center;
   animation: fadeIn 0.6s ease-in-out;
 }
 
-.register-card h2 {
+.login-card h2 {
   font-weight: 700;
   margin-bottom: 0.5rem;
 }
@@ -30,7 +32,7 @@
   margin-bottom: 1.5rem;
 }
 
-/* Inputs */
+/* Input fields */
 .form-group {
   margin-bottom: 1rem;
 }
@@ -40,13 +42,13 @@
   padding: 0.8rem 1rem;
   border: none;
   border-radius: 10px;
+  outline: none;
   font-size: 1rem;
   box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.1);
-  outline: none;
 }
 
-/* Register button */
-.btn-register {
+/* Modern button */
+.btn-login {
   width: 100%;
   padding: 0.9rem;
   font-size: 1rem;
@@ -59,42 +61,36 @@
   transition: all 0.3s ease;
 }
 
-.btn-register:hover {
+.btn-login:hover {
   background: #115293;
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(25, 118, 210, 0.3);
 }
 
-/* Success & Error messages */
+/* Error message */
 .error-msg {
   color: #c0392b;
   margin-top: 1rem;
   font-size: 0.9rem;
 }
 
-.success-msg {
-  color: #2e7d32;
+/* Register link */
+.signup-text {
   margin-top: 1rem;
   font-size: 0.9rem;
 }
 
-/* Login link */
-.login-text {
-  margin-top: 1rem;
-  font-size: 0.9rem;
-}
-
-.login-text a {
+.signup-text a {
   color: #1976d2;
   font-weight: 600;
   text-decoration: none;
 }
 
-.login-text a:hover {
+.signup-text a:hover {
   text-decoration: underline;
 }
 
-/* Fade-in animation */
+/* Smooth fade-in animation */
 @keyframes fadeIn {
   from {
     opacity: 0;

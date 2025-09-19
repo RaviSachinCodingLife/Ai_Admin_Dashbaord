@@ -1,8 +1,9 @@
-<nav style="padding: 1rem; background: #1976d2; color: white">
-  <a routerLink="/login" style="margin-right: 1rem; color: white; cursor: pointer">Login</a>
-  <a routerLink="/dashboard" style="color: white; cursor: pointer">Dashboard</a>
-</nav>
+<ng-container *ngIf="!isLoggedIn(); else loggedIn">
+  <router-outlet></router-outlet>
+</ng-container>
 
-<div style="padding: 2rem">
-  <app-layout></app-layout>
-</div>
+<ng-template #loggedIn>
+  <div class="content">
+    <app-layout></app-layout>
+  </div>
+</ng-template>

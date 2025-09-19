@@ -20,8 +20,10 @@
     <h3>{{ metric.name }}</h3>
     <p>Value: {{ metric.value }}</p>
 
-    <button *ngIf="role !== 'viewer'" (click)="askAI(metric)">🤖 Ask AI</button>
-    <button *ngIf="role !== 'viewer'" (click)="deleteMetric(metric._id)">🗑 Delete</button>
+    <div style="display: flex; gap: 10px; align-items: center">
+      <button *ngIf="role !== 'viewer'" (click)="askAI(metric)">🤖 Ask AI</button>
+      <button *ngIf="role !== 'viewer'" (click)="deleteMetric(metric._id)">🗑 Delete</button>
+    </div>
   </div>
 
   <!-- AI Explanation -->
@@ -31,11 +33,10 @@
   </div>
 
   <!-- AI Prediction -->
-  <div>
-    <button (click)="predictAI()">🔮 Predict Next Month</button>
+  <div style="display: flex; flex-direction: column; gap: 10px">
+    <button (click)="predictAI()" style="width: 250px">🔮 Predict Next Month</button>
     <p *ngIf="prediction">{{ prediction }}</p>
-  </div>
 
-  <!-- Export -->
-  <button (click)="exportCSV()">📂 Export CSV</button>
+    <button (click)="exportCSV()" style="width: 250px">📂 Export CSV</button>
+  </div>
 </div>

@@ -1,0 +1,100 @@
+.users-container {
+  padding: 2rem;
+  max-width: 900px;
+  margin: auto;
+  font-family: 'Segoe UI', sans-serif;
+
+  h2 {
+    color: #1976d2;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .add-user {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    justify-content: center;
+
+    input, select {
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      outline: none;
+      font-size: 1rem;
+      transition: all 0.2s ease-in-out;
+
+      &:focus {
+        border-color: #1976d2;
+        box-shadow: 0 0 8px rgba(25, 118, 210, 0.3);
+      }
+    }
+
+    button {
+      background: linear-gradient(135deg, #a8edea, #fed6e3);
+      border: none;
+      border-radius: 8px;
+      padding: 0.6rem 1.2rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s ease-in-out;
+
+      &:hover {
+        background: linear-gradient(135deg, #89f7fe, #66a6ff);
+        color: white;
+        transform: translateY(-2px);
+      }
+    }
+  }
+
+  .table-wrapper {
+    overflow-x: auto;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+
+      th, td {
+        padding: 1rem;
+        text-align: left;
+      }
+
+      thead {
+        background: #1976d2;
+        color: white;
+
+        th {
+          font-weight: 600;
+        }
+      }
+
+      tbody tr {
+        border-bottom: 1px solid #e0e0e0;
+        transition: all 0.2s ease-in-out;
+
+        &:hover {
+          background: rgba(25, 118, 210, 0.05);
+        }
+
+        td button {
+          background: #ff6b6b;
+          color: white;
+          border: none;
+          border-radius: 6px;
+          padding: 0.3rem 0.6rem;
+          cursor: pointer;
+          transition: all 0.2s;
+
+          &:hover {
+            background: #d32f2f;
+            transform: translateY(-1px);
+          }
+        }
+      }
+    }
+  }
+}

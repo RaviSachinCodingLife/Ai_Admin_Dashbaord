@@ -5,6 +5,7 @@ import { NgChartsModule } from 'ng2-charts';
 import { ChartConfiguration } from 'chart.js';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../core/auth';
+import { SocketService } from '../../core/socket';
 
 interface Metric {
   _id: string;
@@ -32,11 +33,25 @@ export class DashboardComponent implements OnInit {
 
   newMetric: Partial<Metric> = { name: '', value: 0 };
 
-  constructor(private http: HttpClient, private auth: AuthService) {}
+  constructor(private http: HttpClient, private auth: AuthService, private socket: SocketService) {}
 
   ngOnInit() {
     this.role = this.auth.getRole() || 'viewer';
     this.fetchMetrics();
+
+    this.socket.onNewMetric().subscribe((metric) => {
+      this.metrics.push(metric);
+      this.updateCharts();
+    });
+
+    this.socket.onDeleteMetric().subscribe((id: string) => {
+      this.metrics = this.metrics.filter((m) => m._id !== id);
+      this.updateCharts();
+    });
+
+    this.socket.onNotification().subscribe((note) => {
+      alert(`🔔 ${note.message}`);
+    });
   }
 
   fetchMetrics() {
@@ -59,17 +74,17 @@ export class DashboardComponent implements OnInit {
 
     this.chartData = {
       labels,
-      datasets: [{ data: values, label: 'Metrics (Bar)' }],
+      datasets: [{ data: [...values], label: 'Metrics (Bar)' }],
     };
 
     this.lineChartData = {
       labels,
-      datasets: [{ data: values, label: 'Metrics Trend', fill: true }],
+      datasets: [{ data: [...values], label: 'Metrics Trend', fill: true }],
     };
 
     this.pieChartData = {
       labels,
-      datasets: [{ data: values, label: 'Metrics Distribution' }],
+      datasets: [{ data: [...values], label: 'Metrics Distribution' }],
     };
   }
 
@@ -82,7 +97,8 @@ export class DashboardComponent implements OnInit {
       })
       .subscribe({
         next: (res) => {
-          this.metrics.push(res);
+          // Instead of pushing, replace metrics array with a new one
+          this.metrics = [...this.metrics.filter((m) => m._id !== res._id), res];
           this.updateCharts();
           this.newMetric = { name: '', value: 0 };
         },

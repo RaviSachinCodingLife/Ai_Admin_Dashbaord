@@ -1,4 +1,3 @@
-// routes/notifications.js
 import express from 'express';
 import { protect } from '../middleware/authMiddleware.js';
 import Notification from '../models/Notification.js';
@@ -6,21 +5,30 @@ import Notification from '../models/Notification.js';
 export default (io) => {
   const router = express.Router();
 
-  // Get all notifications
+  // Get last 20 notifications
   router.get('/', protect(), async (req, res) => {
-    const notes = await Notification.find().sort({ createdAt: -1 });
-    res.json(notes);
+    try {
+      const notifications = await Notification.find().sort({ createdAt: -1 }).limit(20);
+      res.json(notifications);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
   });
 
-  // Add notification
+  // Create notification (admin & manager only)
   router.post('/', protect(['admin', 'manager']), async (req, res) => {
-    const note = new Notification({ message: req.body.message });
-    await note.save();
+    try {
+      const { message, type = 'info' } = req.body;
+      if (!message) return res.status(400).json({ error: 'Message required' });
 
-    // ✅ Emit notification to all clients
-    io.emit('notification:new', note);
+      const note = new Notification({ message, type });
+      await note.save();
 
-    res.json(note);
+      io.emit('notification:new', note); // broadcast to all clients
+      res.status(201).json(note);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
   });
 
   return router;

@@ -35,7 +35,23 @@ export class AuthService {
     localStorage.clear();
   }
 
-  isAuthenticated() {
-    return !!this.getToken();
+  isAuthenticated(): boolean {
+    const token = this.getToken();
+    if (!token) return false;
+
+    const expiry = localStorage.getItem('tokenExpiry');
+    if (expiry && new Date() > new Date(expiry)) {
+      this.logout();
+      return false;
+    }
+    return true;
+  }
+
+  setToken(token: string) {
+    localStorage.setItem('token', token);
+    // Set token expiry 10 minutes from now
+    const expiry = new Date();
+    expiry.setMinutes(expiry.getMinutes() + 10);
+    localStorage.setItem('tokenExpiry', expiry.toISOString());
   }
 }

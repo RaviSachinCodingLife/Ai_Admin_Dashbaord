@@ -1,6 +1,7 @@
 <div class="users-container">
   <h2>👥 User Management</h2>
 
+  <!-- Add new user form -->
   <div class="add-user">
     <input [(ngModel)]="newUser.name" placeholder="User name" />
     <select [(ngModel)]="newUser.role">
@@ -11,10 +12,27 @@
     <button (click)="addUser()">➕ Add User</button>
   </div>
 
-  <ul>
-    <li *ngFor="let user of users">
-      {{ user.name }} - <b>{{ user.role }}</b>
-      <button (click)="deleteUser(user.id)">❌ Remove</button>
-    </li>
-  </ul>
+  <!-- Users table -->
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Role</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.id }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.role }}</td>
+          <td>
+            <button (click)="deleteUser(user.id)">❌ Remove</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

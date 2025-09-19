@@ -1,15 +1,31 @@
-<div class="layout">
-  <aside class="sidebar">
-    <h3>AI Admin</h3>
-    <nav>
-      <a routerLink="/dashboard" routerLinkActive="active">📊 Dashboard</a>
-      <a routerLink="/reports" routerLinkActive="active">📑 Reports</a>
-      <a routerLink="/users" routerLinkActive="active">👥 Users</a>
-      <a routerLink="/notifications" routerLinkActive="active">🔔 Notifications</a>
-    </nav>
-  </aside>
+<div class="app-container">
+  <nav class="navbar">
+    <div class="brand">AI Admin Dashboard</div>
 
-  <main class="content">
-    <router-outlet></router-outlet>
-  </main>
+    <div class="profile" (click)="toggleDropdown()">
+      <img class="avatar" src="https://i.pravatar.cc/40" alt="User Avatar" />
+      <span class="username">{{ username }}</span>
+
+      <div class="dropdown" *ngIf="showDropdown">
+        <button (click)="logout()">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <nav>
+        <a routerLink="/dashboard" routerLinkActive="active">📊 Dashboard</a>
+        <a routerLink="/reports" routerLinkActive="active">📑 Reports</a>
+        <a *ngIf="isAdmin()" routerLink="/users" routerLinkActive="active">👥 Users</a>
+        <a routerLink="/notifications" routerLinkActive="active">🔔 Notifications</a>
+      </nav>
+    </aside>
+
+    <div class="dashboard-layout">
+      <div class="main-content">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
 </div>
