@@ -3,7 +3,9 @@
 
   <!-- Add new user form -->
   <div class="add-user">
-    <input [(ngModel)]="newUser.name" placeholder="User name" />
+    <input [(ngModel)]="newUser.name" placeholder="User Name" />
+    <input [(ngModel)]="newUser.email" type="email" placeholder="Email" />
+    <input [(ngModel)]="newUser.password" type="password" placeholder="Password" />
     <select [(ngModel)]="newUser.role">
       <option value="viewer">Viewer</option>
       <option value="manager">Manager</option>
@@ -19,17 +21,21 @@
         <tr>
           <th>ID</th>
           <th>Name</th>
+          <th>Email</th>
           <th>Role</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let user of users">
-          <td>{{ user.id }}</td>
+          <td>{{ user._id }}</td>
           <td>{{ user.name }}</td>
-          <td>{{ user.role }}</td>
+          <td>{{ user.email }}</td>
           <td>
-            <button (click)="deleteUser(user.id)">❌ Remove</button>
+            <span class="role-badge" [ngClass]="user.role">{{ user.role | titlecase }}</span>
+          </td>
+          <td>
+            <button class="delete-btn" (click)="deleteUser(user._id)">❌ Remove</button>
           </td>
         </tr>
       </tbody>

@@ -19,7 +19,12 @@ interface User {
 })
 export class UsersComponent implements OnInit {
   users: User[] = [];
-  newUser: Partial<User> = { name: '', role: 'viewer' };
+  newUser: Partial<User & { password: string; email: string }> = {
+    name: '',
+    email: '',
+    password: '',
+    role: 'viewer',
+  };
   token: string | null = null;
 
   constructor(private http: HttpClient) {}
@@ -49,14 +54,14 @@ export class UsersComponent implements OnInit {
   }
 
   addUser() {
-    if (!this.newUser.name || !this.token) return;
+    if (!this.newUser.name || !this.newUser.email || !this.newUser.password || !this.token) return;
 
     this.http
       .post<User>('http://localhost:5000/api/users', this.newUser, this.getAuthHeaders())
       .subscribe({
         next: (res) => {
           this.users.push(res);
-          this.newUser = { name: '', role: 'viewer' };
+          this.newUser = { name: '', email: '', password: '', role: 'viewer' };
         },
         error: (err) => console.error(err),
       });
